@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+api_key.txt
+logs.db
+
 # C extensions
 *.so
 .apienv/
