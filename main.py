@@ -85,6 +85,15 @@ def get_logs_by_level(level: str, db: Session = Depends(get_db), api_key: str = 
         raise HTTPException(status_code=404, detail="No logs found for this level")
     return filtered_logs
 
+
+@app.get("/logs/process/{process_name}", response_model=List[LogEntryCreate])
+def get_logs_by_process_name(process_name: str, db: Session = Depends(get_db), api_key: str = Depends(verify_api_key)):
+    filtered_logs = db.query(LogEntry).filter(LogEntry.process_name == process_name).all()
+    if not filtered_logs:
+        raise HTTPException(status_code=404, detail="No logs found for this process name")
+    return filtered_logs
+
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="127.0.0.1", port=8000)
